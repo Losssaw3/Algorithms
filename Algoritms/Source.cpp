@@ -1,95 +1,134 @@
 #include <iostream>
 #include <vector>
 #include<random>
-int random_gen(int min, int max)
+/**
+* @brief Функция для заполнения вектора случайными значениями
+* 
+* @param min - минимальное значение элемента
+* @param max - максимальное значение элемента
+* @param size - размер вектора
+* @return mass - возвращает вектор заполненный случайными значениями
+*/
+std::vector<int> random_gen(int min, int max, size_t size)
 {
+    std::vector<int> mass;
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> uniformIntDistribution(min, max);
-    return uniformIntDistribution(gen);
+    for (size_t i = 0; i < size; i++)
+    {
+        mass.push_back(uniformIntDistribution(gen));
+    }
+    return mass;
 }
 
-int insertionSort(std::vector<int>& list)
+/**
+* @brief Функция выводящая в поток вывода значения вектора
+* @param vector - вектор значения которого необходимо получить в потоке вывода
+*/
+void printVector(std::vector<int>& vector)
+{
+    for (size_t i = 0; i < vector.size(); i++)
+    {
+        std::cout << vector[i] << '\n';
+    }
+}
+
+/**
+* @brief Функция для сортировки вектора методом вставки
+*
+* @param vector список элемнты которого необходимо отсортировать
+* @return vector - вектор отсортированный методом пузырька
+*/
+std::vector <int> insertionSort(std::vector<int>& vector)
 {
     int counter = 0;
-    for (unsigned int i = 1; i < list.size(); i++) {
-        int elem = list[i];
+    for (size_t i = 1; i < vector.size(); i++)
+    {
+        int element = vector[i];
         int j = i - 1;
-        while (j >= 0 and list[j] > elem) {
-            list[j + 1] = list[j];
+        while (j >= 0 and vector[j] > element)
+{
+            vector[j + 1] = vector[j];
             counter += 1;
             j--;
         }
-        list[j + 1] = elem;
+        vector[j + 1] = element;
     }
-    return counter;
+    return vector;
 }
 
+/**
+* @brief Функция для сортировки вектора методом быстрой сортировки
+* @param vector список элемнты которого необходимо отсортироватьм
+* @param counter кол-во итераций алгоритма
+* @return temp1 - вектор отсортированный методом быстрой сортировки
+*/
 std::vector<int> quickSort(std::vector<int>& vector, size_t& counter)
 {
-    if (vector.size() < 2) return vector;
+    int min_size = 2;
+    if (vector.size() < min_size) return vector;
     int current = vector[0];
-    std::vector<int> vector_1 {};
-    std::vector<int> vector_2 {};
+    std::vector<int> vector1 {};
+    std::vector<int> vector2 {};
  
     for (size_t j = 1; j < vector.size(); j++){
         {
             counter++;
             if (vector[j] < current)
-                vector_1.push_back(vector[j]);
+                vector1.push_back(vector[j]);
             else
-                vector_2.push_back(vector[j]);
+                vector2.push_back(vector[j]);
         }
     }
-    std::vector<int> temp_1 = quickSort(vector_1, counter);
-    std::vector<int> temp_2 = quickSort(vector_2, counter);
-    temp_1.push_back(current);
-    temp_1.insert(temp_1.end(), temp_2.begin(), temp_2.end());
-    return temp_1;
+    std::vector<int> temp1 = quickSort(vector1, counter);
+    std::vector<int> temp2 = quickSort(vector2, counter);
+    temp1.push_back(current);
+    temp1.insert(temp1.end(), temp2.begin(), temp2.end());
+    return temp1;
 }
 
-
-int bubbleSort(std::vector<int>& vector)
+/**
+* @brief Функция для сортировки вектора методом пузырька
+* @param vector список элемнты которого необходимо отсортировать
+* @return vector - вектор отсортированный методом пузырька
+*/
+std::vector <int> bubbleSort(std::vector<int>& vector)
 {
     int counter = 0;
     for (int i = 0; i < vector.size() - 1; i++)
     {
-        // Track if a swap was made
         bool swapped = false;
 
         for (int j = 0; j < vector.size() - i - 1; j++)
         {
             if (vector[j] > vector[j + 1])
             {
-                // Swap arr[j] and arr[j + 1]
                 std::swap(vector[j], vector[j + 1]);
                 counter += 1;
                 swapped = true;
             }
         }
-        // If no two elements were swapped, the array is sorted
         if (!swapped)
         {
             break;
         }
     }
-    return counter;
+    return vector;
 }
 int main()
 {
+
     size_t max = 9999;
     size_t min = 0;
-    std::vector<int> mass;
-    for (size_t i = 0; i < 10000; i++)
-    {
-        mass.push_back(random_gen(min, max));
-    }
-    std::vector<int> result = quickSort(mass, min);
-    int counter = insertionSort(mass);
-    for (size_t i = 0; i < result.size(); i++)
-    {
-        std::cout << result[i] << '\n';
-    }
-    std::cout << counter;
+    size_t size = 10000;
+
+    std::vector<int> list1 = random_gen(min, max, size);
+    std::vector<int> list2 = random_gen(min, max, size);
+    std::vector<int> list3 = random_gen(min, max, size);
+    std::vector<int> insertionVector = insertionSort(list1);
+    std::vector<int> bubbleVector = bubbleSort(list2);
+    std::vector<int> quickSorted = quickSort(list3,min);
+    printVector(quickSorted);
     return 0;
 }
