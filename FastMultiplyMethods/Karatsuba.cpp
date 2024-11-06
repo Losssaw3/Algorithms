@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cmath>
 #include "../../SystemOfLinearEquations/SoLE/SoLE.h"
 #include "../../SystemOfLinearEquations/SoLE/SoLE.cpp"
@@ -34,11 +34,31 @@ miit::Matrix getMatrix(int& first, int& second, size_t n)
 	miit::Matrix m1 = m.inverse_default();
 	
 	return m1;
+}	
+/*
+* @brief Функция умножающая 2 числа методом Карацубы
+* @param first - первый множитель
+* @param second - второй множитель
+* @param n - кол-во разрядов в числах
+* @return произведение двух чисел
+*/
+int karatsubaMul(int& first, int& second, size_t n);
+
+int main()
+{
+	int left = 1234;
+	int right = 5678;
+	size_t n = 4;
+	size_t n1 = 2;
+	int left1 = 12;
+	int right1 = 56;
+	std::cout << karatsubaMul(left,right,n)  << "   " << 1234 * 5678;
+	return 0;
 }
 
 int karatsubaMul(int& first, int& second, size_t n)
 {
-	if (n!= 1)
+	if (n != 1)
 	{
 		size_t lowestBase = 1;
 		int devider = pow(10, n / 2);
@@ -53,7 +73,7 @@ int karatsubaMul(int& first, int& second, size_t n)
 
 		int high = karatsubaMul(firstLeft, secondLeft, n / 2);
 		int low = karatsubaMul(firstRight, secondRight, n / 2);
-		int middle = karatsubaMul(middle1,middle2,lowestBase) - high - low;
+		int middle = karatsubaMul(middle1, middle2, lowestBase) - high - low;
 		int result = pow(10, n) * high + pow(10, n / 2) * middle + low;
 		return result;
 	}
@@ -61,17 +81,5 @@ int karatsubaMul(int& first, int& second, size_t n)
 	{
 		return first * second;
 	}
-		
-}
 
-int main()
-{
-	int left = 1236;
-	int right = 5678;
-	size_t n = 4;
-	size_t n1 = 2;
-	int left1 = 12;
-	int right1 = 56;
-	std::cout << karatsubaMul(left,right,n)  << "   " << 1234 * 5678;
-	return 0;
 }
