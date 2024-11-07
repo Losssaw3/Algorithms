@@ -48,9 +48,9 @@ int main()
 	try
 	{
 		size_t min = 3;
-		size_t max = 20;
+		size_t max = 150;
 		size_t node = 6;
-		size_t sourceNode = 7;
+		size_t sourceNode = 4;
 		const std::vector<std::vector<int>> m1 = generatePathMatrix(node, min, max);
 
 		prinPathMatrix(m1, node);
@@ -111,10 +111,10 @@ void printSolution(std::vector<size_t>& vector)
 
 size_t findMinNonZeroIndex(const std::vector<size_t>& vector, const std::vector<size_t>& ignoredIndices)
 {
-	int minIndex = -1;
-	int minValue = std::numeric_limits<int>::max();
+	int minIndex = vector.size() - 1;
+	int minValue = vector[0];
 
-	for (int i = 0; i < vector.size(); ++i)
+	for (size_t i = 0; i < vector.size(); ++i)
 	{
 		if (vector[i] != 0 && std::find(ignoredIndices.begin(), ignoredIndices.end(), i) == ignoredIndices.end())
 		{
