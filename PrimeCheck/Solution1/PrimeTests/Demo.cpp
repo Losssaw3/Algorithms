@@ -2,7 +2,7 @@
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	std::cout << MillerRabin(65,2) << SoloveiShtrassen(65,2)  << FermaTest(65,2);
+	std::cout << MillerRabin(849177,3);
 	return 0;
 }
 
