@@ -89,7 +89,7 @@ long long GeneratePrimeNumber(long long q, size_t t)
 		p = q * (N + u) + 1;
 	}
 
-	while (fl == false)
+	while (!fl)
 	{
 		if (((modExp(2, p - 1, p)) == 1) and (modExp(2, N + u, p) != 1))
 		{
